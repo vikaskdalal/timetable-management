@@ -28,10 +28,16 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
     <?= $this->Html->css('base.css') ?>
     <?= $this->Html->css('style.css') ?>
+    <?= $this->Html->css('bootstrap/css/bootstrap.min.css') ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
+    <?php 
+    echo $this->Html->script([
+    		'bootstrap/js/bootstrap.min.js'
+    ]);
+    ?>
 </head>
 <body>
     <nav class="top-bar expanded" data-topbar role="navigation">
