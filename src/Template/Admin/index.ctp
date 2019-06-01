@@ -1,6 +1,7 @@
 <ul>
-	<li>Add Teachers</li>
-	<li><a href="/admin/add-class">Add Class</a></li>
-	<li>Manage Time Table</li>
+	<li><a href="/admin/add-new-teacher">Add Teachers</a></li>
+	<li><a href="/admin/add-new-class">Add Class</a></li>
+	<li><a href="/admin/add-new-subject">Add Subject</a></li>
+	<li><a href="/admin/manage-timetable">Manage Time Table</a></li>
 	<li>Access Time Table</li>
 </ul>

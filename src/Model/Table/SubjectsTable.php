@@ -9,13 +9,13 @@ use Cake\Network\Session;
 use Cake\Core\Configure;
 use Cake\Auth\DefaultPasswordHasher;
 
-class GradesTable extends Table
+class SubjectsTable extends Table
 {
 	public function initialize(array $config)
 	{
 		parent::initialize($config);
 		
-		$this->setTable('grades');
+		$this->setTable('subjects');
 		$this->setDisplayField('id');
 		$this->setPrimaryKey('id');
 	}
