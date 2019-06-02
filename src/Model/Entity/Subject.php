@@ -10,6 +10,10 @@ class Subject extends Entity
 			'id'=>False
 			
 	];
+	protected function _getSubjectWithCode()
+	{
+		return $this->subject_name. ' (' . $this->subject_code.')';
+	}
 }
 
 ?>

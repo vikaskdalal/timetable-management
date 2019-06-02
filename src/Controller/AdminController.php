@@ -55,11 +55,11 @@ class AdminController extends AppController
 		])->toArray();
 		$getAllSubjects=$subjectTable->find('list',[
 				'keyField' => 'id',
-				'valueField' => 'subject_name'
+				'valueField' => 'subject_with_code'
 		])->toArray();
 		$getAllTeachers=$teachersTable->find('list',[
 				'keyField' => 'id',
-				'valueField' => 'name'
+				'valueField' => 'name_designation'
 		])->toArray();
 		
 		/* store new entry in the database */

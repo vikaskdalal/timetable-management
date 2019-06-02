@@ -10,6 +10,10 @@ class Teacher extends Entity
 			'id'=>False
 			
 	];
+	protected function _getNameDesignation()
+	{
+		return $this->name . ' (' . $this->designation.')';
+	}
 }
 
 ?>
