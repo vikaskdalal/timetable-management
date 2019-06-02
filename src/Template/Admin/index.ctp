@@ -3,5 +3,5 @@
 	<li><a href="/admin/add-new-class">Add Class</a></li>
 	<li><a href="/admin/add-new-subject">Add Subject</a></li>
 	<li><a href="/admin/manage-timetable">Manage Time Table</a></li>
-	<li>Access Time Table</li>
+	<li><a href="/admin/access-timetable">Access Time Table</a></li>
 </ul>

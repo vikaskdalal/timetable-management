@@ -65,10 +65,16 @@ class AdminController extends AppController
 		/* store new entry in the database */
 		$timetablesTableEntity=$timetablesTable->newEntity();
 		if($this->request->is('post')){
-			print_r($timetablesTableEntity);exit;
 			$formData=$this->request->getData();
-			$timetablesTableEntity=$timetablesTable->newEntity($formData);
-			$timetablesTable->save($timetablesTableEntity);
+			$timetablesTableEntity= $timetablesTable->patchEntity($timetablesTableEntity, $this->request->getData(),
+					['validate' => 'timetable']);
+			if(!$timetablesTableEntity->getErrors()){
+				$timetablesTable->save($timetablesTableEntity);
+			}
+			//print_r($timetablesTableEntity);exit;
+			//$timetablesTableEntity=$timetablesTable->newEntity($formData);
+			//print_r($timetablesTableEntity);
+			
 			
 		}
 		$this->set('timetableEntity',$timetablesTableEntity);
@@ -76,6 +82,15 @@ class AdminController extends AppController
 		$this->set('grades',$getAllGrades);
 		$this->set('subjects',$getAllSubjects);
 		$this->set('weekdays',$weekdays);
+		
+	}
+	
+	public function accessTimetable(){
+		$timetablesTable=TableRegistry::getTableLocator()->get('Timetables');
+		$getOrderedData=$timetablesTable->find('all')
+		->contain(['Teachers','Grades','Subjects'])->enableHydration(false)->toArray();
+		//echo "<pre>";
+		print_r($getOrderedData);
 		
 	}
 }
