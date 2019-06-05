@@ -87,10 +87,16 @@ class AdminController extends AppController
 	
 	public function accessTimetable(){
 		$timetablesTable=TableRegistry::getTableLocator()->get('Timetables');
-		$getOrderedData=$timetablesTable->find('all')
+		$weekdays=Configure::read("WEEK_DAYS");
+		$getRecess=Configure::read("SOTRE_RECESS");
+		$getTableData=$timetablesTable->find('all')
+		->where(['grade_id'=>1])
 		->contain(['Teachers','Grades','Subjects'])->enableHydration(false)->toArray();
 		//echo "<pre>";
-		print_r($getOrderedData);
+		$this->set('weekdays',$weekdays);
+		$this->set('getTableData',$getTableData);
+		$this->set("getRecess",$getRecess);
+		print_r($getTableData);
 		
 	}
 }
