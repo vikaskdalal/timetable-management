@@ -87,6 +87,23 @@ class TimetablesTable extends Table
 				'message' => 'Maximum Periods of Subject exceeded',
 				])
 		->notEmpty('period',Configure::read('FIELD_REQUIRED'))
+		->add('period', 'customRule', [
+				'rule' => function ($value, $context) {
+				$gradeId=trim($context['data']['grade_id']);
+				$subjectId=trim($context['data']['subject_id']);
+				$period=trim($context['data']['period']);
+				$weekday=trim($context['data']['weekday']);
+				$checkIfAlreadyExists=$this->find('all')
+				->where(['grade_id'=>$gradeId,'weekday'=>$weekday,'period'=>$value])->toArray();
+				if (empty($checkIfAlreadyExists)) {
+					return true;
+				}
+				else{
+					return false;
+				}
+				},
+				'message' => 'This period is already occupied',
+				])
 		->notEmpty('weekday',Configure::read('FIELD_REQUIRED'))
 		;
 		return $validator;

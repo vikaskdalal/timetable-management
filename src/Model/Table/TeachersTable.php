@@ -18,6 +18,14 @@ class TeachersTable extends Table
 		$this->setTable('teachers');
 		$this->setDisplayField('id');
 		$this->setPrimaryKey('id');
+		$this->hasMany('Timetables')
+		->setForeignKey([
+				'teacher_id'
+		])
+		->setBindingKey([
+				'id'
+				
+		]);
 	}
 	
 	public function validationTeacher(Validator $validator){

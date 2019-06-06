@@ -12,7 +12,7 @@ class AdminController extends AppController
 	public function addNewClass(){
 		$gradesTable=TableRegistry::getTableLocator()->get('Grades');
 		$gradesTableEntity=$gradesTable->newEntity();
-		if($this->request->is('post')){
+		if($this->request->is('post') || $this->request->is('put')){
 			$formData=$this->request->getData();
 			$gradesTableEntity=$gradesTable->newEntity($formData);
 			$gradesTable->save($gradesTableEntity);
@@ -23,7 +23,7 @@ class AdminController extends AppController
 	public function addNewSubject(){
 		$subjectTable=TableRegistry::getTableLocator()->get('Subjects');
 		$subjectTableEntity=$subjectTable->newEntity();
-		if($this->request->is('post')){
+		if($this->request->is('post') || $this->request->is('put')){
 			$formData=$this->request->getData();
 			$subjectTableEntity=$subjectTable->newEntity($formData);
 			$subjectTable->save($subjectTableEntity);
@@ -34,7 +34,7 @@ class AdminController extends AppController
 	public function addNewTeacher(){
 		$teachersTable=TableRegistry::getTableLocator()->get('Teachers');
 		$teachersTableEntity=$teachersTable->newEntity();
-		if($this->request->is('post')){
+		if($this->request->is('post') || $this->request->is('put')){
 			$formData=$this->request->getData();
 			$teachersTableEntity= $teachersTable->patchEntity($teachersTableEntity, $this->request->getData(),
 					['validate' => 'teacher']);
@@ -71,7 +71,7 @@ class AdminController extends AppController
 		
 		/* store new entry in the database */
 		$timetablesTableEntity=$timetablesTable->newEntity();
-		if($this->request->is('post')){
+		if($this->request->is('post') || $this->request->is('put')){
 			$formData=$this->request->getData();
 			$timetablesTableEntity= $timetablesTable->patchEntity($timetablesTableEntity, $this->request->getData(),
 					['validate' => 'timetable']);
@@ -108,11 +108,18 @@ class AdminController extends AppController
 		$getTableData=$timetablesTable->find('all')
 		->where(['grade_id'=>1])
 		->contain(['Teachers','Grades','Subjects'])->enableHydration(false)->toArray();
+		
+		$getAllTeachers=$teachersTable->find('list',[
+				'keyField' => 'id',
+				'valueField' => 'name_designation'
+		])->toArray();
+		
 		//echo "<pre>";
 		$this->set('weekdays',$weekdays);
 		$this->set('getTableData',$getTableData);
 		$this->set("getRecess",$getRecess);
 		$this->set('getAllGrades',$getAllGrades);
+		$this->set('teachers',$getAllTeachers);
 		
 	}
 	
@@ -121,6 +128,29 @@ class AdminController extends AppController
 		$getTableData=$timetablesTable->find('all')
 		->where(['grade_id'=>$searchKey])
 		->contain(['Teachers','Grades','Subjects'])->enableHydration(false)->toArray();
+		echo json_encode($getTableData);
+		exit;
+	}
+	public function getTimeTableTeacherBased($searchKey){
+		$timetablesTable=TableRegistry::getTableLocator()->get('Timetables');
+		$teachersTable=TableRegistry::getTableLocator()->get('Teachers');
+		$getTableData=$teachersTable->find('all')
+		->where(['id'=>$searchKey])
+		->contain(['Timetables','Timetables.Grades','Timetables.Subjects'])->enableHydration(false)->toArray();
+		echo json_encode($getTableData);
+		exit;
+	}
+	public function getTimeTableDayWise($searchKey){
+		$timetablesTable=TableRegistry::getTableLocator()->get('Timetables');
+		$teachersTable=TableRegistry::getTableLocator()->get('Teachers');
+		$getTableData=$teachersTable->find('all')
+		->contain(['Timetables'=> function ($q) use ($searchKey) {
+			return $q
+			
+			->where(['Timetables.weekday' => $searchKey]);
+		},'Timetables.Grades','Timetables.Subjects'])->enableHydration(false)->toArray();
+		/* echo "<pre>";
+		print_r($getTableData); */
 		echo json_encode($getTableData);
 		exit;
 	}
