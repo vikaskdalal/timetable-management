@@ -9,6 +9,9 @@
 		          <div>
 		             <?php echo $this->Form->control('subject_name',array('type' => 'text','label'=>['class' => 'required-label','text' => 'Subject Name'],'class'=>'form-control','required'=>true));?>
 		          </div>
+		          <div>
+		             <?php echo $this->Form->control('max_periods',array('type' => 'text','label'=>['class' => 'required-label','text' => 'Maximum Periods In Week'],'class'=>'form-control','required'=>true));?>
+		          </div>
 				  <div class="col-lg-12 text-center" >
 		            <?php	echo $this->Form->submit('Add Subject', array( 'class'=>'btn btn1 btn-color')); ?>
 		          </div>

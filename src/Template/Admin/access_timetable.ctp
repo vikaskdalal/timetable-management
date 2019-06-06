@@ -1,3 +1,16 @@
+<div class="select-class">
+             <?php 
+             echo $this->Form->control('grade_id', array(
+             		'type'=>'select',
+             		'label'=>['class' => 'required-label','text' => 'Select Class'],
+             		'options'=>$getAllGrades,
+             		'empty'=>'Select Class',
+             		'class'=>'form-control get-classbased-timetable',
+             		'required'=>false
+             ));
+             ?>
+</div>
+
 <table>
 	<thead>
 	<tr>
@@ -54,3 +67,28 @@
 		?>
 	</tbody>
 </table>
+
+
+
+<!-- Write jquery code here -->
+
+<script>
+	$(document).ready(function(){
+			$(".get-classbased-timetable").change(function(){
+					var grade_id=$(this).val();
+					$.ajax({
+				        type:'POST',
+				        beforeSend: function(xhr){
+				             xhr.setRequestHeader('X-CSRF-Token', csrfToken);}, 
+				        url: "Admin/getTimeTable/",
+				        success: function(result){
+				        	
+				        },
+				        error: function(xhr,textStatus,error){
+				            // alert(xhr);
+				        }
+				    });
+				});
+		});
+
+</script>

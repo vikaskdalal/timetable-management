@@ -35,7 +35,8 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->fetch('script') ?>
     <?php 
     echo $this->Html->script([
-    		'bootstrap/js/bootstrap.min.js'
+    		'bootstrap/js/bootstrap.min',
+    		'jquery'
     ]);
     ?>
 </head>
@@ -54,5 +55,8 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     </div>
     <footer>
     </footer>
+<script>
+	var csrfToken = '<?= json_encode($this->request->getParam('_csrfToken')); ?>';
+</script>
 </body>
 </html>
