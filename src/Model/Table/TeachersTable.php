@@ -20,6 +20,25 @@ class TeachersTable extends Table
 		$this->setPrimaryKey('id');
 	}
 	
-		
+	public function validationTeacher(Validator $validator){
+		$validator->notEmpty('name',Configure::read('FIELD_REQUIRED'))
+		->add('name', 'customRule', [
+				'rule' => function ($value, $context) {
+				$designation=trim($context['data']['designation']);
+				$checkIfAlreadyExists=$this->find('all')
+				->where(['name'=>$value,'designation'=>$designation])->toArray();
+				if (empty($checkIfAlreadyExists)) {
+					return true;
+				}
+				else{
+					return false;
+				}
+				},
+				'message' => 'Same Name and Designation already exists.',
+				])
+				;
+				return $validator;
+						
+	}
 }
 ?>

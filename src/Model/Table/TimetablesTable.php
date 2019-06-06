@@ -8,6 +8,7 @@ use Cake\Validation\Validator;
 use Cake\Network\Session;
 use Cake\Core\Configure;
 use Cake\Auth\DefaultPasswordHasher;
+use Cake\ORM\TableRegistry;
 
 class TimetablesTable extends Table
 {
@@ -66,6 +67,25 @@ class TimetablesTable extends Table
 				])
 		->notEmpty('grade_id',Configure::read('FIELD_REQUIRED'))
 		->notEmpty('subject_id',Configure::read('FIELD_REQUIRED'))
+		->add('subject_id', 'customRule', [
+				'rule' => function ($value, $context) {
+				$gradeId=trim($context['data']['grade_id']);
+				$subjectId=trim($context['data']['subject_id']);
+				$period=trim($context['data']['period']);
+				$weekday=trim($context['data']['weekday']);
+				$subjectTable=TableRegistry::getTableLocator()->get('Subjects');
+				$findSubjectDetails=$subjectTable->findById($subjectId)->enableHydration(false)->toArray();
+				$checkIfAlreadyExists=$this->find('all')
+				->where(['grade_id'=>$gradeId,'subject_id'=>$subjectId])->toArray();
+				if (count($checkIfAlreadyExists)<=$findSubjectDetails[0]['max_periods']) {
+					return true;
+				}
+				else{
+					return false;
+				}
+				},
+				'message' => 'Maximum Periods of Subject exceeded',
+				])
 		->notEmpty('period',Configure::read('FIELD_REQUIRED'))
 		->notEmpty('weekday',Configure::read('FIELD_REQUIRED'))
 		;

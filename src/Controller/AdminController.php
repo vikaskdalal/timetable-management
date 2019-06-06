@@ -15,9 +15,8 @@ class AdminController extends AppController
 		if($this->request->is('post')){
 			$formData=$this->request->getData();
 			$gradesTableEntity=$gradesTable->newEntity($formData);
-			print_r($gradesTableEntity);
 			$gradesTable->save($gradesTableEntity);
-			
+			$this->Flash->success("Data saved successfully");
 		}
 	}
 	
@@ -28,6 +27,7 @@ class AdminController extends AppController
 			$formData=$this->request->getData();
 			$subjectTableEntity=$subjectTable->newEntity($formData);
 			$subjectTable->save($subjectTableEntity);
+			$this->Flash->success("Data saved successfully");
 			
 		}
 	}
@@ -36,10 +36,17 @@ class AdminController extends AppController
 		$teachersTableEntity=$teachersTable->newEntity();
 		if($this->request->is('post')){
 			$formData=$this->request->getData();
-			$teachersTableEntity=$teachersTable->newEntity($formData);
-			$teachersTable->save($teachersTableEntity);
+			$teachersTableEntity= $teachersTable->patchEntity($teachersTableEntity, $this->request->getData(),
+					['validate' => 'teacher']);
+			//$teachersTableEntity=$teachersTable->newEntity($formData);
+			if(!$teachersTableEntity->getErrors()){
+				
+				$teachersTable->save($teachersTableEntity);
+				$this->Flash->success("Data saved successfully");
+			}
 			
 		}
+		$this->set('teachersTableEntity',$teachersTableEntity);
 	}
 	
 	public function manageTimetable(){
@@ -70,6 +77,7 @@ class AdminController extends AppController
 					['validate' => 'timetable']);
 			if(!$timetablesTableEntity->getErrors()){
 				$timetablesTable->save($timetablesTableEntity);
+				$this->Flash->success("Data saved successfully");
 			}
 			//print_r($timetablesTableEntity);exit;
 			//$timetablesTableEntity=$timetablesTable->newEntity($formData);
@@ -106,5 +114,14 @@ class AdminController extends AppController
 		$this->set("getRecess",$getRecess);
 		$this->set('getAllGrades',$getAllGrades);
 		
+	}
+	
+	public function getTimeTable($searchKey){
+		$timetablesTable=TableRegistry::getTableLocator()->get('Timetables');
+		$getTableData=$timetablesTable->find('all')
+		->where(['grade_id'=>$searchKey])
+		->contain(['Teachers','Grades','Subjects'])->enableHydration(false)->toArray();
+		echo json_encode($getTableData);
+		exit;
 	}
 }
