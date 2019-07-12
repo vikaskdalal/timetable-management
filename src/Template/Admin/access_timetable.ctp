@@ -1,6 +1,4 @@
-
-
-<div class="form-row mb-5">
+<div class="form-row col-11 mx-auto  mb-5">
 	<div class="col-lg-4 col-12">
 		<div class="select-class">
              <?php 
@@ -65,6 +63,7 @@
 		recess["SATURDAY"]="S";
 			$(".get-classbased-timetable").change(function(){
 					$(".get-teacherbased-timetable").val("");
+					$(".get-weekdaybased-timetable").val("");
 					var grade_id=$(this).val();
 					$.ajax({
 				        type:'POST',
@@ -97,7 +96,7 @@
 							        		 }
 						        	 });
 						        		if(!flag){
-						        			finalHTMLResult+="<td></td>";
+						        			finalHTMLResult+="<td class='empty-table-cell'></td>";
 							        		}		   
 				        		 }
 
@@ -115,6 +114,7 @@
 
 			$(".get-teacherbased-timetable").change(function(){
 				$(".get-classbased-timetable").val("");
+				$(".get-weekdaybased-timetable").val("");
 				var teacher_id=$(this).val();
 				$.ajax({
 			        type:'POST',
@@ -149,7 +149,7 @@
 					        		 });
 					        	 });
 					        		if(!flag){
-					        			finalHTMLResult+="<td></td>";
+					        			finalHTMLResult+="<td class='empty-table-cell'></td>";
 						        		}		   
 			        		 }
 
@@ -169,6 +169,7 @@
 
 			$(".get-weekdaybased-timetable").change(function(){
 				$(".get-classbased-timetable").val("");
+				$(".get-teacherbased-timetable").val("");
 				var weekday=$(this).val();
 				$.ajax({
 			        type:'POST',
@@ -202,7 +203,7 @@
 						        		 }
 					        		 });
 					        		if(!flag){
-					        			finalHTMLResult+="<td></td>";
+					        			finalHTMLResult+="<td class='empty-table-cell'></td>";
 						        		}		   
 			        		 }
 

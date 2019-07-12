@@ -13,7 +13,7 @@
 		             <?php echo $this->Form->control('max_periods',array('type' => 'text','label'=>['class' => 'required-label','text' => 'Maximum Periods In Week'],'class'=>'form-control','required'=>true));?>
 		          </div>
 				  <div class="col-lg-12 text-center" >
-		            <?php	echo $this->Form->submit('Add Subject', array( 'class'=>'btn btn1 btn-color')); ?>
+		            <?php	echo $this->Form->submit('Add Subject', array( 'class'=>'btn btn-primary')); ?>
 		          </div>
 			</div>
 	</div>

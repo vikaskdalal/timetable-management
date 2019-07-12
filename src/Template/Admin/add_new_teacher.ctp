@@ -10,7 +10,7 @@
 		             <?php echo $this->Form->control('designation',array('type' => 'text','label'=>['class' => 'required-label','text' => 'Teacher Designation'],'class'=>'form-control','required'=>true));?>
 		          </div>
 				  <div class="col-lg-12 text-center" >
-		            <?php	echo $this->Form->submit('Add Teacher', array( 'class'=>'btn btn1 btn-color')); ?>
+		            <?php	echo $this->Form->submit('Add Teacher', array( 'class'=>'btn btn-primary')); ?>
 		          </div>
 			</div>
 	</div>

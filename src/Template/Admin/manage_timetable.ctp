@@ -67,7 +67,7 @@
 		             ?>
 		          </div>
 				  <div class="col-lg-12 text-center" >
-		            <?php	echo $this->Form->submit('Add New Entry', array( 'class'=>'btn btn1 btn-color')); ?>
+		            <?php	echo $this->Form->submit('Add New Entry', array( 'class'=>'btn btn-primary')); ?>
 		          </div>
 			</div>
 	</div>

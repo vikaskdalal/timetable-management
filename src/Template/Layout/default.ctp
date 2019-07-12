@@ -35,22 +35,16 @@ $cakeDescription = 'Timetable Management System';
     <?= $this->fetch('script') ?>
     <?php 
     echo $this->Html->script([
-    		'bootstrap/js/bootstrap.min.js',
-    		'jquery'
+    		'jquery',
+    		'bootstrap/js/bootstrap.min.js'
+    		
     ]);
     ?>
 </head>
 <body>
-    <nav class="top-bar expanded" data-topbar role="navigation">
-        <ul class="title-area large-3 medium-4 columns">
-            <li class="name">
-                <h1><a href="/">Home</a></h1>
-            </li>
-        </ul>
-        
-    </nav>
+    <?= $this->element('header'); ?>	
     <?= $this->Flash->render() ?>
-    <div class="container clearfix">
+    <div class="container-fluid clearfix">
         <?= $this->fetch('content') ?>
     </div>
     <footer>

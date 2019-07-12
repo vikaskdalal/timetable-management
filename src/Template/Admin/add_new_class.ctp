@@ -7,7 +7,7 @@
 		             <?php echo $this->Form->control('grade_name',array('type' => 'text','label'=>['class' => 'required-label','text' => 'Class Name'],'class'=>'form-control','required'=>true));?>
 		          </div>
 				  <div class="col-lg-12 text-center" >
-		            <?php	echo $this->Form->submit('Add Class', array( 'class'=>'btn btn1 btn-color')); ?>
+		            <?php	echo $this->Form->submit('Add Class', array( 'class'=>'btn btn-primary')); ?>
 		          </div>
 			</div>
 	</div>
