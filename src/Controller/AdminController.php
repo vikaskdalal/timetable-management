@@ -154,4 +154,49 @@ class AdminController extends AppController
 		echo json_encode($getTableData);
 		exit;
 	}
+	
+	public function editTimetable($timetablePrimaryKey){
+		$timetablesTable=TableRegistry::getTableLocator()->get('Timetables');
+		$teachersTable=TableRegistry::getTableLocator()->get('Teachers');
+		$subjectTable=TableRegistry::getTableLocator()->get('Subjects');
+		$gradesTable=TableRegistry::getTableLocator()->get('Grades');
+		
+		$weekdays=Configure::read("WEEK_DAYS");
+		
+		$getTableData=$timetablesTable->find('all')
+		->where(['Timetables.id'=>$timetablePrimaryKey])
+		->contain(['Teachers','Grades','Subjects'])->enableHydration(false)->toArray();
+		
+		$getAllGrades=$gradesTable->find('list',[
+				'keyField' => 'id',
+				'valueField' => 'grade_name'
+		])->toArray();
+		$getAllSubjects=$subjectTable->find('list',[
+				'keyField' => 'id',
+				'valueField' => 'subject_with_code'
+		])->toArray();
+		$getAllTeachers=$teachersTable->find('list',[
+				'keyField' => 'id',
+				'valueField' => 'name_designation'
+		])->toArray();
+		
+		$finalarray=['weekdays'=>$weekdays,'grades'=>$getAllGrades,'subjects'=>$getAllSubjects,'teachers'=>$getAllTeachers,'tabledata'=>$getTableData];
+		/* echo "<pre>";
+		print_r($finalarray); */
+		echo json_encode($finalarray);
+		exit;
+	}
+	
+	public function updateTimetable($newEntryData){
+		$decodeData=json_decode($newEntryData,1);
+		$timetablesTable=TableRegistry::getTableLocator()->get('Timetables');
+		
+		$getData=$timetablesTable->get($decodeData['id']);
+		
+		$article = $timetablesTable->patchEntity($getData, $decodeData);
+		//print_r($article);exit;
+		$timetablesTable->save($article);
+		echo "updated";
+		exit;
+	}
 }

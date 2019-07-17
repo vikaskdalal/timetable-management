@@ -548,3 +548,12 @@ table, th, td {
 .empty-table-cell{
 	background:red;
 }
+.table-cell{
+	position:relative;
+}
+.edit-icon-style{
+	position:absolute;
+	top:2px;
+	right:2px;
+	cursor:pointer;
+}
